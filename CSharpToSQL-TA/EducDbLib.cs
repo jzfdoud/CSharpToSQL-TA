@@ -29,7 +29,7 @@ namespace CSharpToSQL_TA
             connection.Open();
             if(connection.State != System.Data.ConnectionState.Open)
             {
-                throw new Exception("Connection not open");
+                throw new Exception("Connection did not open");
             }
         }
 
