@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSharpToSQL_TA
 {
-    class MajorsController
+    public class MajorsController
     {
         private Connection connection { get; set; }
 
