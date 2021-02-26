@@ -1,6 +1,7 @@
 ﻿using CSharpToSQL_TA;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Linq;
 
 namespace TestCSharpToSQL_TA
 {
@@ -8,6 +9,7 @@ namespace TestCSharpToSQL_TA
     {
         static void Main(string[] args)
         {
+            #region Day #9 C#
             /*
             // Day 9 C# : C# to SQL ------------------------------------------------------
 
@@ -17,8 +19,8 @@ namespace TestCSharpToSQL_TA
             sql.ExecSelect();
             sql.Disconnect();
             */
-
-
+            #endregion
+            #region Day #10 C#
             /* 
              // Day 10 C# : Contd. C# to SQL ------------------------------------------------
 
@@ -71,7 +73,9 @@ namespace TestCSharpToSQL_TA
                  Console.WriteLine($"{s.Id} | {s.Firstname} {s.Lastname} | {s.Major}");
              }
             */
-
+            #endregion
+            #region Day #11 C#
+            /*
             // Day #11 C# to SQL contd. --------------------------------------------------------
 
             var conn = new Connection();
@@ -94,11 +98,38 @@ namespace TestCSharpToSQL_TA
             {
                 Console.WriteLine($"{m.Code} | {m.Description} | MinSAT: {m.MinSAT}");
             }
+            conn.Disconnect();
+            */
+            #endregion
 
+            #region Day #12 C#
 
+            var conn = new Connection();
+            conn.Connect("EdDb");
+
+            var sctrl = new StudentsController(conn);
+            var students = sctrl.GetAll();
+
+            var mctrl = new MajorsController(conn);
+            var majors = mctrl.GetAll();
+
+            var sm = from s in students
+                     join m in majors
+                     on s.MajorId equals m.Id
+                     select new
+                     {
+                         s.Id,
+                         Name = s.Firstname + " " + s.Lastname,
+                         Major = m.Description
+                     };
+            foreach (var s in sm )
+            {
+                Console.WriteLine($"{s.Id} | {s.Name} | {s.Major}");
+            }
 
             conn.Disconnect();
 
+            #endregion
 
         }
     }
